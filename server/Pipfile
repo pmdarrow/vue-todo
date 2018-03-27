@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-sqlalchemy = "*"
+flask-migrate = "*"
 sqlalchemy = "*"
 marshmallow-sqlalchemy = "*"
 mysqlclient = "*"
