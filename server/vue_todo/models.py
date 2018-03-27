@@ -18,7 +18,8 @@ class Todo(db.Model):
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow,
                          onupdate=datetime.utcnow)
-    todo_list_id = db.Column(db.Integer, db.ForeignKey('todo_list.id'))
+    todo_list_id = db.Column(db.Integer, db.ForeignKey('todo_list.id'),
+                             nullable=False)
 
     def __repr__(self):
         return '<Todo %r>' % self.title

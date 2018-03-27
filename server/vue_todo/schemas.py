@@ -19,6 +19,7 @@ class TodoSchema(ma.ModelSchema):
 
     class Meta:
         model = Todo
+        include_fk = True
 
 
 todo_list_schema = TodoListSchema()
