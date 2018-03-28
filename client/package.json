@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "test": "vue-cli-service test",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "format": "prettier --write --ignore-path .gitignore \"**/*.{js,vue}\""
   },
   "dependencies": {
     "vue": "^2.5.13",
@@ -22,6 +23,7 @@
     "@vue/test-utils": "^1.0.0-beta.10",
     "babel-core": "^7.0.0-0",
     "babel-jest": "^22.0.4",
+    "prettier": "^1.11.1",
     "vue-template-compiler": "^2.5.13"
   },
   "babel": {
@@ -35,6 +37,11 @@
       "plugin:vue/essential",
       "@vue/airbnb"
     ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "printWidth": 100
   },
   "postcss": {
     "plugins": {
