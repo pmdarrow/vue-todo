@@ -1,21 +1,24 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import About from './views/About.vue';
+
+import TodoLists from './views/TodoLists.vue';
+import TodoList from './views/TodoList.vue';
 
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [
+    { path: '/', redirect: '/todo-lists' },
     {
-      path: '/',
-      name: 'home',
-      component: Home,
+      path: '/todo-lists',
+      name: 'todo-lists',
+      component: TodoLists,
     },
     {
-      path: '/about',
-      name: 'about',
-      component: About,
+      path: '/todo-lists/:id',
+      name: 'todo-list',
+      component: TodoList,
     },
   ],
 });

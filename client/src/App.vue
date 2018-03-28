@@ -1,31 +1,27 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div>
+    <section class="todoapp">
+      <h1>vue-todo</h1>
+      <router-view/>
+    </section>
+    <footer class="info">
+      <p>Double-click to edit a todo</p>
+      <p>Written by <a href="http://evanyou.me">Peter Darrow</a></p>
+      <p>Based on <a href="https://github.com/vuejs/vue/tree/dev/examples/todomvc">Vue.js TodoMVC</a></p>
+    </footer>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.title {
   text-align: center;
-  color: #2c3e50;
 }
-#nav {
-  padding: 30px;
+.title h2 {
+  display: inline-block;
+  font-weight: 300;
+  font-size: 28px;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.info {
+  font-size: 14px;
 }
 </style>
