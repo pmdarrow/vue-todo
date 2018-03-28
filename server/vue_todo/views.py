@@ -19,6 +19,14 @@ def get_todo_list(pk):
     return jsonify(result.data)
 
 
+@app.route('/todo_lists/<int:pk>', methods=['DELETE'])
+def delete_todo_list(pk):
+    todo_list = TodoList.query.get_or_404(pk)
+    db.session.delete(todo_list)
+    db.session.commit()
+    return '', 204
+
+
 @app.route('/todo_lists', methods=['POST'])
 def create_todo_list():
     json_data = request.get_json()

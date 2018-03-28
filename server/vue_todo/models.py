@@ -1,11 +1,13 @@
 from datetime import datetime
+from sqlalchemy.orm import backref
 from . import db
 
 
 class TodoList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
-    todos = db.relationship('Todo', backref='todo_list')
+    todos = db.relationship('Todo', cascade='all, delete-orphan',
+                            backref=backref('todo_list', single_parent=True))
 
     def __repr__(self):
         return '<TodoList %r>' % self.name
