@@ -16,10 +16,13 @@ class TodoListSchema(ma.ModelSchema):
 
 class TodoSchema(ma.ModelSchema):
     title = field_for(TodoList, 'name', validate=not_blank)
+    created = field_for(TodoList, 'name', dump_only=True)
+    modified = field_for(TodoList, 'name', dump_only=True)
 
     class Meta:
         model = Todo
         include_fk = True
+        exclude = ('todo_list',)
 
 
 todo_list_schema = TodoListSchema()

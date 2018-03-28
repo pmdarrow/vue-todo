@@ -1,8 +1,8 @@
 from flask import request, jsonify
 
 from . import app, db
-from .models import TodoList
-from .schemas import todo_list_schema, todo_lists_schema
+from .models import TodoList, Todo
+from .schemas import todo_list_schema, todo_lists_schema, todo_schema
 
 
 @app.route('/todo_lists', methods=['GET'])
@@ -14,9 +14,7 @@ def get_todo_lists():
 
 @app.route('/todo_lists/<int:pk>', methods=['GET'])
 def get_todo_list(pk):
-    todo_list = TodoList.query.get(pk)
-    if todo_list is None:
-        return jsonify({"error": "TodoList could not be found."}), 404
+    todo_list = TodoList.query.get_or_404(pk)
     result = todo_list_schema.dump(todo_list)
     return jsonify(result.data)
 
@@ -31,4 +29,56 @@ def create_todo_list():
     db.session.add(todo_list)
     db.session.commit()
     result = todo_list_schema.dump(todo_list)
+    return jsonify(result.data), 201
+
+
+@app.route('/todo/<int:pk>', methods=['GET'])
+def get_todo(pk):
+    todo = Todo.query.get_or_404(pk)
+    result = todo_schema.dump(todo)
+    return jsonify(result.data)
+
+
+@app.route('/todo/<int:pk>', methods=['PATCH'])
+def update_todo(pk):
+    todo = Todo.query.get_or_404(pk)
+    json_data = request.get_json()
+    todo, errors = todo_schema.load(json_data, instance=todo)
+    if errors:
+        return jsonify(errors), 422
+
+    todo_list = TodoList.query.get(todo.todo_list_id)
+    if todo_list is None:
+        return jsonify({"error": "TodoList with ID %s could not be found."
+                                 % todo.todo_list_id}), 400
+
+    db.session.add(todo)
+    db.session.commit()
+    result = todo_schema.dump(todo)
+    return jsonify(result.data), 200
+
+
+@app.route('/todo/<int:pk>', methods=['DELETE'])
+def delete_todo(pk):
+    todo = Todo.query.get_or_404(pk)
+    db.session.delete(todo)
+    db.session.commit()
+    return '', 204
+
+
+@app.route('/todo', methods=['POST'])
+def create_todo():
+    json_data = request.get_json()
+    todo, errors = todo_schema.load(json_data)
+    if errors:
+        return jsonify(errors), 422
+
+    todo_list = TodoList.query.get(todo.todo_list_id)
+    if todo_list is None:
+        return jsonify({"error": "TodoList with ID %s could not be found."
+                                 % todo.todo_list_id}), 400
+
+    db.session.add(todo)
+    db.session.commit()
+    result = todo_schema.dump(todo)
     return jsonify(result.data), 201
