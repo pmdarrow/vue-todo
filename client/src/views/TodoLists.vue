@@ -8,6 +8,7 @@
         <li v-for="todoList in todoLists" :key="todoList.id">
           <router-link :to="{ name: 'todo-list', params: { id: todoList.id }}">
             <label>{{ todoList.name }}</label>
+            <button class="destroy" @click.prevent="deleteTodoList({ id: todoList.id })"></button>
           </router-link>
         </li>
       </ul>
@@ -16,11 +17,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'TodoLists',
   computed: mapState(['todoLists']),
+  methods: {
+    ...mapMutations(['deleteTodoList']),
+  },
 };
 </script>
 
@@ -36,5 +40,8 @@ a:hover {
 li label {
   cursor: pointer;
   padding-left: 15px;
+}
+.destroy {
+  cursor: pointer;
 }
 </style>

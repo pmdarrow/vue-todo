@@ -12,6 +12,7 @@
   "dependencies": {
     "todomvc-app-css": "^2.1.1",
     "vue": "^2.5.13",
+    "vue-focus": "^2.1.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

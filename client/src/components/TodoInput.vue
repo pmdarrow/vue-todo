@@ -8,11 +8,36 @@
       autofocus
       autocomplete="off"
       placeholder="What needs to be done?"
+      v-model="title"
+      @keyup.enter="doneAdd"
     />
-    <!--v-model="newTodo"-->
-    <!--@keyup.enter="addTodo"-->
   </header>
 </template>
+
+<script>
+import { mapMutations } from 'vuex';
+
+export default {
+  name: 'TodoItem',
+  props: {
+    todoListId: Number,
+    todo: Object,
+  },
+  data() {
+    return { title: '' };
+  },
+  methods: {
+    ...mapMutations(['createTodo']),
+    doneAdd() {
+      this.createTodo({
+        todoListId: this.$props.todoListId,
+        title: this.$data.title,
+      });
+      this.$data.title = '';
+    },
+  },
+};
+</script>
 
 <style scoped>
 .header {
