@@ -1,8 +1,9 @@
 <template>
   <div>
     <section class="title">
-      <h2>Select a todo list...</h2>
+      <h2>Choose or create a todo list...</h2>
     </section>
+    <TodoListInput />
     <section class="main">
       <ul class="todo-list">
         <li v-for="todoList in todoLists" :key="todoList.id">
@@ -18,9 +19,11 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
+import TodoListInput from '@/components/TodoListInput.vue';
 
 export default {
   name: 'TodoLists',
+  components: { TodoListInput },
   computed: mapState(['todoLists']),
   methods: {
     ...mapMutations(['deleteTodoList']),
