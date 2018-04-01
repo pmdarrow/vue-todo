@@ -1,16 +1,37 @@
 <template>
-  <footer class="footer" v-show="todos.length" v-cloak>
+  <footer class="footer" v-show="total">
     <span class="todo-count">
       <strong>{{ remaining }}</strong> items left
     </span>
 
     <ul class="filters">
-      <li><a href="#" :class="{ selected: visibility === 'all' }">All</a></li>
-      <li><a href="#" :class="{ selected: visibility === 'active' }">Active</a></li>
-      <li><a href="#" :class="{ selected: visibility === 'completed' }">Completed</a></li>
+      <li>
+        <router-link
+          :to="{ name: 'todo-list.all', params: { id: todoListId }}"
+          :class="{ selected: filter === 'all' }"
+        >
+          All
+        </router-link>
+      </li>
+      <li>
+        <router-link
+          :to="{ name: 'todo-list.active', params: { id: todoListId }}"
+          :class="{ selected: filter === 'active' }"
+        >
+          Active
+        </router-link>
+      </li>
+      <li>
+        <router-link
+          :to="{ name: 'todo-list.completed', params: { id: todoListId }}"
+          :class="{ selected: filter === 'completed' }"
+        >
+          Completed
+        </router-link>
+      </li>
     </ul>
 
-    <button class="clear-completed" v-show="todos.length > remaining">
+    <button class="clear-completed" v-show="total > remaining">
       <!--@click="removeCompleted"-->
       Clear completed
     </button>
@@ -21,8 +42,9 @@
 export default {
   name: 'TodoFilter',
   props: {
-    todos: Array,
-    visibility: String,
+    todoListId: Number,
+    filter: String,
+    total: Number,
     remaining: Number,
   },
 };

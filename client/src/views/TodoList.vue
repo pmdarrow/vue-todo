@@ -4,12 +4,22 @@
       <h2>{{ todoList.name }}</h2>
     </section>
     <TodoInput :todoListId="todoList.id" />
-    <section class="main" v-show="todos.length" v-cloak>
+    <section class="main" v-show="allTodos.length">
       <ul class="todo-list">
-        <TodoItem v-for="todo in todos" :key="todo.id" :todoListId="todoList.id" :todo="todo" />
+        <TodoItem
+          v-for="todo in filteredTodos"
+          :key="todo.id"
+          :todoListId="todoList.id"
+          :todo="todo"
+        />
       </ul>
     </section>
-    <TodoFilter :todos="todos" visibility="all" :remaining="1" />
+    <TodoFilter
+      :todoListId="todoList.id"
+      :filter="filter"
+      :total="allTodos.length"
+      :remaining="activeTodos.length"
+    />
   </div>
 </template>
 
@@ -30,8 +40,20 @@ export default {
       const listIdParam = parseInt(this.$route.params.id, 10);
       return this.$store.state.todoLists[listIdParam];
     },
-    todos() {
+    allTodos() {
       return this.todoList.todos.map(todoId => this.$store.state.todos[todoId]);
+    },
+    activeTodos() {
+      return this.allTodos.filter(todo => todo.completed === false);
+    },
+    completedTodos() {
+      return this.allTodos.filter(todo => todo.completed === true);
+    },
+    filteredTodos() {
+      return this[`${this.filter}Todos`];
+    },
+    filter() {
+      return this.$route.name.split('.')[1];
     },
   },
 };

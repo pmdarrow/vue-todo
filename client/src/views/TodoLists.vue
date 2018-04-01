@@ -7,7 +7,7 @@
     <section class="main">
       <ul class="todo-list">
         <li v-for="todoList in todoLists" :key="todoList.id">
-          <router-link :to="{ name: 'todo-list', params: { id: todoList.id }}">
+          <router-link :to="{ name: 'todo-list.all', params: { id: todoList.id }}">
             <label>{{ todoList.name }}</label>
             <button class="destroy" @click.prevent="deleteTodoList({ id: todoList.id })"></button>
           </router-link>

@@ -15,7 +15,7 @@ export default new Vuex.Store({
       2: {
         id: 2,
         name: 'my second list',
-        todos: [3, 4],
+        todos: [3, 4, 5, 6],
       },
     },
     todos: {
@@ -39,6 +39,16 @@ export default new Vuex.Store({
         title: 'my fourth todo item',
         completed: false,
       },
+      5: {
+        id: 5,
+        title: 'my fifth completed todo item',
+        completed: true,
+      },
+      6: {
+        id: 6,
+        title: 'my sixth completed todo item',
+        completed: true,
+      },
     },
   },
   mutations: {
@@ -55,6 +65,9 @@ export default new Vuex.Store({
     },
     deleteTodoList(state, { id }) {
       Vue.delete(state.todoLists, id);
+    },
+    removeCompletedTodos() {
+      // TODO: implement
     },
     createTodo(state, { todoListId, title }) {
       const todoList = state.todoLists[todoListId];

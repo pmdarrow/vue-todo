@@ -19,6 +19,20 @@ export default new Router({
       path: '/todo-lists/:id',
       name: 'todo-list',
       component: TodoList,
+      children: [
+        {
+          name: 'todo-list.all',
+          path: 'all',
+        },
+        {
+          name: 'todo-list.active',
+          path: 'active',
+        },
+        {
+          name: 'todo-list.completed',
+          path: 'completed',
+        },
+      ],
     },
   ],
 });
