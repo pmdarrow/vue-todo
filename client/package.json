@@ -38,7 +38,21 @@
     "extends": [
       "plugin:vue/essential",
       "@vue/airbnb"
-    ]
+    ],
+    "rules": {
+      "no-param-reassign": [
+        "error",
+        {
+          "props": true,
+          "ignorePropertyModificationsFor": [
+            "acc",
+            "accumulator",
+            "e",
+            "state"
+          ]
+        }
+      ]
+    }
   },
   "prettier": {
     "singleQuote": true,
