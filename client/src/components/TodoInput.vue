@@ -18,7 +18,7 @@
 import { mapMutations } from 'vuex';
 
 export default {
-  name: 'TodoItem',
+  name: 'TodoInput',
   props: {
     todoListId: Number,
     todo: Object,

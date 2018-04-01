@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'TodoList',
+  name: 'TodoFilter',
   props: {
     todos: Array,
     visibility: String,
