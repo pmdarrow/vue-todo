@@ -9,6 +9,7 @@
       autocomplete="off"
       placeholder="What needs to be done?"
       v-model="title"
+      v-focus="focus"
       @keyup.enter="doneAdd"
     />
   </header>
@@ -16,15 +17,20 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import { focus } from 'vue-focus';
 
 export default {
   name: 'TodoInput',
+  directives: { focus },
   props: {
     todoListId: Number,
     todo: Object,
   },
   data() {
-    return { title: '' };
+    return {
+      title: '',
+      focus: true,
+    };
   },
   methods: {
     ...mapMutations(['createTodo']),
