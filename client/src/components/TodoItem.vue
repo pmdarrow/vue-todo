@@ -19,7 +19,7 @@
         type="text"
         v-focus="editing"
         :value="todo.title"
-        @blur="doneEdit"
+        @blur="cancelEdit"
         @keyup.enter="doneEdit"
         @keyup.esc="cancelEdit"
       />

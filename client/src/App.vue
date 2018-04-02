@@ -5,7 +5,7 @@
       <router-view/>
     </section>
     <footer class="info">
-      <p>Double-click to edit a todo</p>
+      <p>Double-click to edit a todo, press enter to save it</p>
       <p>Written by <a href="https://github.com/pmdarrow">Peter Darrow</a></p>
       <p>Based on <a href="https://github.com/vuejs/vue/tree/dev/examples/todomvc">Vue.js TodoMVC</a></p>
     </footer>
