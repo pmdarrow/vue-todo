@@ -49,9 +49,9 @@ export default {
     remaining: Number,
   },
   methods: {
-    ...mapActions(['deleteCompletedTodos']),
+    ...mapActions(['clearCompletedTodos']),
     clearClicked() {
-      this.deleteCompletedTodos({ todoListId: this.$props.todoListId });
+      this.clearCompletedTodos({ todoListId: this.$props.todoListId });
     },
   },
 };

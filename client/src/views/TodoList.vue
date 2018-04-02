@@ -42,18 +42,20 @@ export default {
     next();
   },
   computed: {
+    listIdParam() {
+      return parseInt(this.$route.params.id, 10);
+    },
     todoList() {
-      const listIdParam = parseInt(this.$route.params.id, 10);
-      return this.$store.state.todoLists[listIdParam];
+      return this.$store.state.todoLists[this.listIdParam];
     },
     allTodos() {
-      return this.todoList.todos.map(todoId => this.$store.state.todos[todoId]);
+      return this.$store.getters.allTodos(this.listIdParam);
     },
     activeTodos() {
-      return this.allTodos.filter(todo => todo.completed === false);
+      return this.$store.getters.activeTodos(this.listIdParam);
     },
     completedTodos() {
-      return this.allTodos.filter(todo => todo.completed === true);
+      return this.$store.getters.completedTodos(this.listIdParam);
     },
     filteredTodos() {
       return this[`${this.filter}Todos`];

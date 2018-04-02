@@ -11,6 +11,14 @@ export default new Vuex.Store({
     todoLists: {},
     todos: {},
   },
+  getters: {
+    allTodos: state => todoListId =>
+      state.todoLists[todoListId].todos.map(todoId => state.todos[todoId]),
+    activeTodos: (state, getters) => todoListId =>
+      getters.allTodos(todoListId).filter(todo => !todo.completed),
+    completedTodos: (state, getters) => todoListId =>
+      getters.allTodos(todoListId).filter(todo => todo.completed),
+  },
   mutations: {
     setTodoLists(state, { todoLists }) {
       state.todoLists = todoLists;
@@ -67,13 +75,9 @@ export default new Vuex.Store({
       await api.deleteTodo(id);
       commit('deleteTodo', { todoListId, id });
     },
-    async deleteCompletedTodos({ commit, state }, { todoListId }) {
-      const todoList = state.todoLists[todoListId];
-      const todos = todoList.todos.map(todoId => state.todos[todoId]);
-      const completedTodos = todos.filter(todo => todo.completed);
-      await Promise.all(completedTodos.map(todo => api.deleteTodo(todo.id)));
-      const activeTodos = todos.filter(todo => !todo.completed).map(todo => todo.id);
-      commit('setTodos', { todoList, todos: activeTodos });
+    async clearCompletedTodos({ commit, getters }, { todoListId }) {
+      await Promise.all(getters.completedTodos(todoListId).map(t => api.deleteTodo(t.id)));
+      commit('setTodos', { todoListId, todoIds: getters.activeTodos(todoListId).map(t => t.id) });
     },
   },
 });
