@@ -27,6 +27,7 @@
 import TodoItem from '@/components/TodoItem.vue';
 import TodoInput from '@/components/TodoInput.vue';
 import TodoFilter from '@/components/TodoFilter.vue';
+import store from '@/store';
 
 export default {
   name: 'TodoList',
@@ -35,8 +36,10 @@ export default {
     TodoInput,
     TodoFilter,
   },
-  created() {
-    this.$store.dispatch('loadTodoList', { id: this.listIdParam });
+  async beforeRouteEnter(to, from, next) {
+    const listIdParam = parseInt(to.params.id, 10);
+    await store.dispatch('loadTodoList', { id: listIdParam });
+    next();
   },
   computed: {
     listIdParam() {

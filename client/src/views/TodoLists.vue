@@ -20,12 +20,14 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import TodoListInput from '@/components/TodoListInput.vue';
+import store from '@/store';
 
 export default {
   name: 'TodoLists',
   components: { TodoListInput },
-  created() {
-    this.$store.dispatch('loadTodoLists');
+  async beforeRouteEnter(to, from, next) {
+    await store.dispatch('loadTodoLists');
+    next();
   },
   computed: mapState(['todoLists']),
   methods: {
