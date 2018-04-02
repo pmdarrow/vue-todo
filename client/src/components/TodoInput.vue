@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 import { focus } from 'vue-focus';
 
 export default {
@@ -26,7 +26,7 @@ export default {
     todo: Object,
   },
   methods: {
-    ...mapMutations(['createTodo']),
+    ...mapActions(['createTodo']),
     doneAdd(e) {
       const title = e.target.value.trim();
       if (title) {

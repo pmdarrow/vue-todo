@@ -42,11 +42,9 @@ export default {
     next();
   },
   computed: {
-    listIdParam() {
-      return parseInt(this.$route.params.id, 10);
-    },
     todoList() {
-      return this.$store.state.todoLists[this.listIdParam];
+      const listIdParam = parseInt(this.$route.params.id, 10);
+      return this.$store.state.todoLists[listIdParam];
     },
     allTodos() {
       return this.todoList.todos.map(todoId => this.$store.state.todos[todoId]);

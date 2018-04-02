@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 import { focus } from 'vue-focus';
 
 export default {
@@ -43,12 +43,15 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['toggleTodo', 'updateTodo', 'deleteTodo']),
+    ...mapActions(['updateTodo', 'deleteTodo']),
     editTodo() {
       this.$data.editing = true;
     },
-    doneToggle() {
-      this.toggleTodo({ id: this.$props.todo.id });
+    doneToggle(e) {
+      this.updateTodo({
+        id: this.$props.todo.id,
+        completed: e.target.checked,
+      });
     },
     doneEdit(e) {
       this.$data.editing = false;

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import TodoListInput from '@/components/TodoListInput.vue';
 import store from '@/store';
 
@@ -31,7 +31,7 @@ export default {
   },
   computed: mapState(['todoLists']),
   methods: {
-    ...mapMutations(['deleteTodoList']),
+    ...mapActions(['deleteTodoList']),
   },
 };
 </script>

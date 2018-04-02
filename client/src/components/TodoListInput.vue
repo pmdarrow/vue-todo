@@ -12,14 +12,14 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 import { focus } from 'vue-focus';
 
 export default {
   name: 'TodoListInput',
   directives: { focus },
   methods: {
-    ...mapMutations(['createTodoList']),
+    ...mapActions(['createTodoList']),
     doneAdd(e) {
       const name = e.target.value.trim();
       if (name) {
