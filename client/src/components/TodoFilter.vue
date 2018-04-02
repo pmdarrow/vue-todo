@@ -31,14 +31,15 @@
       </li>
     </ul>
 
-    <button class="clear-completed" v-show="total > remaining">
-      <!--@click="removeCompleted"-->
+    <button class="clear-completed" v-show="total > remaining" @click="clearClicked">
       Clear completed
     </button>
   </footer>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'TodoFilter',
   props: {
@@ -46,6 +47,12 @@ export default {
     filter: String,
     total: Number,
     remaining: Number,
+  },
+  methods: {
+    ...mapMutations(['deleteCompletedTodos']),
+    clearClicked() {
+      this.deleteCompletedTodos({ todoListId: this.$props.todoListId });
+    },
   },
 };
 </script>
