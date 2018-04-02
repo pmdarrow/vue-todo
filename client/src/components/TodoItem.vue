@@ -1,19 +1,24 @@
 <template>
   <li
     class="todo"
-    :class="{ completed, editing }">
+    :class="{ completed: todo.completed, editing }">
 
       <div class="view">
-        <input class="toggle" type="checkbox" v-model="completed" @change="doneEdit" />
-        <label @dblclick="editTodo">{{ title }}</label>
+        <input
+          class="toggle"
+          type="checkbox"
+          :checked="todo.completed"
+          @change="doneToggle"
+        />
+        <label @dblclick="editTodo">{{ todo.title }}</label>
         <button class="destroy" @click="remove"></button>
       </div>
 
       <input
         class="edit"
         type="text"
-        v-model="title"
         v-focus="editing"
+        :value="todo.title"
         @blur="doneEdit"
         @keyup.enter="doneEdit"
         @keyup.esc="cancelEdit"
@@ -34,22 +39,22 @@ export default {
   },
   data() {
     return {
-      title: this.$props.todo.title,
-      completed: this.$props.todo.completed,
       editing: false,
     };
   },
   methods: {
-    ...mapMutations(['updateTodo', 'deleteTodo']),
+    ...mapMutations(['toggleTodo', 'updateTodo', 'deleteTodo']),
     editTodo() {
       this.$data.editing = true;
     },
-    doneEdit() {
+    doneToggle() {
+      this.toggleTodo({ id: this.$props.todo.id });
+    },
+    doneEdit(e) {
       this.$data.editing = false;
       this.updateTodo({
         id: this.$props.todo.id,
-        title: this.$data.title,
-        completed: this.$data.completed,
+        title: e.target.value.trim(),
       });
     },
     cancelEdit() {

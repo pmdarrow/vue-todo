@@ -18,16 +18,14 @@ import { focus } from 'vue-focus';
 export default {
   name: 'TodoListInput',
   directives: { focus },
-  data() {
-    return {
-      name: '',
-    };
-  },
   methods: {
     ...mapMutations(['createTodoList']),
-    doneAdd() {
-      this.createTodoList({ name: this.$data.name });
-      this.$data.name = '';
+    doneAdd(e) {
+      const name = e.target.value.trim();
+      if (name) {
+        this.createTodoList({ name });
+        e.target.value = '';
+      }
     },
   },
 };

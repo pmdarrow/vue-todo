@@ -66,7 +66,7 @@ export default new Vuex.Store({
     deleteTodoList(state, { id }) {
       Vue.delete(state.todoLists, id);
     },
-    removeCompletedTodos() {
+    removeCompletedTodos(state, { todoListId }) {
       // TODO: implement
     },
     createTodo(state, { todoListId, title }) {
@@ -80,12 +80,11 @@ export default new Vuex.Store({
       };
       todoList.todos.push(nextId);
     },
-    updateTodo(state, { id, title, completed }) {
-      state.todos[id] = {
-        id,
-        title,
-        completed,
-      };
+    toggleTodo(state, { id }) {
+      state.todos[id].completed = !state.todos[id].completed;
+    },
+    updateTodo(state, { id, title }) {
+      state.todos[id].title = title;
     },
     deleteTodo(state, { todoListId, id }) {
       state.todoLists[todoListId].todos =
