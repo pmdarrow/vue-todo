@@ -24,17 +24,15 @@ export default new Vuex.Store({
     setTodo(state, { todo }) {
       Vue.set(state.todos, todo.id, todo);
     },
+    setTodos(state, { todoList, todos }) {
+      Vue.set(todoList, 'todos', todos);
+    },
     appendTodo(state, { todoListId, id }) {
       state.todoLists[todoListId].todos.push(id);
     },
     deleteTodo(state, { todoListId, id }) {
       state.todoLists[todoListId].todos =
         state.todoLists[todoListId].todos.filter(todoId => todoId !== id);
-    },
-    deleteCompletedTodos(state, { todoListId }) {
-      const todoList = state.todoLists[todoListId];
-      const todos = todoList.todos.map(todoId => state.todos[todoId]);
-      todoList.todos = todos.filter(todo => !todo.completed).map(todo => todo.id);
     },
   },
   actions: {
@@ -68,6 +66,14 @@ export default new Vuex.Store({
     async deleteTodo({ commit }, { todoListId, id }) {
       await api.deleteTodo(id);
       commit('deleteTodo', { todoListId, id });
+    },
+    async deleteCompletedTodos({ commit, state }, { todoListId }) {
+      const todoList = state.todoLists[todoListId];
+      const todos = todoList.todos.map(todoId => state.todos[todoId]);
+      const completedTodos = todos.filter(todo => todo.completed);
+      await Promise.all(completedTodos.map(todo => api.deleteTodo(todo.id)));
+      const activeTodos = todos.filter(todo => !todo.completed).map(todo => todo.id);
+      commit('setTodos', { todoList, todos: activeTodos });
     },
   },
 });

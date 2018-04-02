@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'TodoFilter',
@@ -49,7 +49,7 @@ export default {
     remaining: Number,
   },
   methods: {
-    ...mapMutations(['deleteCompletedTodos']),
+    ...mapActions(['deleteCompletedTodos']),
     clearClicked() {
       this.deleteCompletedTodos({ todoListId: this.$props.todoListId });
     },
