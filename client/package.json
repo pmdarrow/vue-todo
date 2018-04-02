@@ -10,6 +10,7 @@
     "format": "prettier --write --ignore-path .gitignore \"**/*.{js,vue}\""
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "todomvc-app-css": "^2.1.1",
     "vue": "^2.5.13",
     "vue-focus": "^2.1.0",

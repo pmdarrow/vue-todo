@@ -9,7 +9,10 @@ Vue.use(Router);
 export default new Router({
   mode: 'history',
   routes: [
-    { path: '/', redirect: '/todo-lists' },
+    {
+      path: '/',
+      redirect: '/todo-lists',
+    },
     {
       path: '/todo-lists',
       name: 'todo-lists',

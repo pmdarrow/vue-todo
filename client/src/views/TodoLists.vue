@@ -24,6 +24,9 @@ import TodoListInput from '@/components/TodoListInput.vue';
 export default {
   name: 'TodoLists',
   components: { TodoListInput },
+  created() {
+    this.$store.dispatch('loadTodoLists');
+  },
   computed: mapState(['todoLists']),
   methods: {
     ...mapMutations(['deleteTodoList']),

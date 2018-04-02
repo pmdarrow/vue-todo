@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="todoList">
     <section class="title">
       <h2>{{ todoList.name }}</h2>
     </section>
@@ -35,10 +35,15 @@ export default {
     TodoInput,
     TodoFilter,
   },
+  created() {
+    this.$store.dispatch('loadTodoList', { id: this.listIdParam });
+  },
   computed: {
+    listIdParam() {
+      return parseInt(this.$route.params.id, 10);
+    },
     todoList() {
-      const listIdParam = parseInt(this.$route.params.id, 10);
-      return this.$store.state.todoLists[listIdParam];
+      return this.$store.state.todoLists[this.listIdParam];
     },
     allTodos() {
       return this.todoList.todos.map(todoId => this.$store.state.todos[todoId]);
