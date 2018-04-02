@@ -51,14 +51,14 @@ def get_todo(pk):
 def update_todo(pk):
     todo = Todo.query.get_or_404(pk)
     json_data = request.get_json()
-    todo, errors = todo_schema.load(json_data, instance=todo)
+    updated_todo, errors = todo_schema.load(json_data, partial=True)
     if errors:
         return jsonify(errors), 422
 
-    todo_list = TodoList.query.get(todo.todo_list_id)
-    if todo_list is None:
-        return jsonify({"error": "TodoList with ID %s could not be found."
-                                 % todo.todo_list_id}), 400
+    if updated_todo.title is not None:
+        todo.title = updated_todo.title
+    if updated_todo.completed is not None:
+        todo.completed = updated_todo.completed
 
     db.session.add(todo)
     db.session.commit()
