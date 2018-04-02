@@ -8,6 +8,7 @@ flask = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-marshmallow = "*"
+flask-cors = "*"
 sqlalchemy = "*"
 mysqlclient = "*"
 
