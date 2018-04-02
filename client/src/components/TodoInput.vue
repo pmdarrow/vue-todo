@@ -8,8 +8,7 @@
       autofocus
       autocomplete="off"
       placeholder="What needs to be done?"
-      v-model="title"
-      v-focus="focus"
+      v-focus="true"
       @keyup.enter="doneAdd"
     />
   </header>
@@ -29,7 +28,6 @@ export default {
   data() {
     return {
       title: '',
-      focus: true,
     };
   },
   methods: {

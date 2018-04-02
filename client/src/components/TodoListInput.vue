@@ -5,8 +5,7 @@
       autofocus
       autocomplete="off"
       placeholder="Enter a name for your todo list"
-      v-model="name"
-      v-focus="focus"
+      v-focus="true"
       @keyup.enter="doneAdd"
     />
   </header>
@@ -22,7 +21,6 @@ export default {
   data() {
     return {
       name: '',
-      focus: true,
     };
   },
   methods: {
