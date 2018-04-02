@@ -29,14 +29,15 @@ export default new Vuex.Store({
     deleteTodoList(state, { id }) {
       Vue.delete(state.todoLists, id);
     },
+    setTodos(state, { todoListId, todoIds }) {
+      state.todoLists[todoListId].todos = todoIds;
+    },
     setTodo(state, { todo }) {
       Vue.set(state.todos, todo.id, todo);
     },
-    setTodos(state, { todoList, todos }) {
-      Vue.set(todoList, 'todos', todos);
-    },
-    appendTodo(state, { todoListId, id }) {
-      state.todoLists[todoListId].todos.push(id);
+    appendTodo(state, { todoListId, todo }) {
+      Vue.set(state.todos, todo.id, todo);
+      state.todoLists[todoListId].todos.push(todo.id);
     },
     deleteTodo(state, { todoListId, id }) {
       state.todoLists[todoListId].todos =
@@ -64,8 +65,7 @@ export default new Vuex.Store({
     },
     async createTodo({ commit }, { todoListId, title }) {
       const todo = await api.createTodo(todoListId, title);
-      commit('setTodo', { todo });
-      commit('appendTodo', { todoListId, id: todo.id });
+      commit('appendTodo', { todoListId, todo });
     },
     async updateTodo({ commit }, { id, title, completed }) {
       const updatedTodo = await api.updateTodo(id, title, completed);
