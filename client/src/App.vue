@@ -13,6 +13,10 @@
 </template>
 
 <style>
+a {
+  color: inherit;
+  text-decoration: none;
+}
 .title {
   text-align: center;
 }

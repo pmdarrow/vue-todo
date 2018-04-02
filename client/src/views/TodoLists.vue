@@ -39,8 +39,6 @@ export default {
 <style scoped>
 a {
   display: block;
-  color: inherit;
-  text-decoration: none;
 }
 a:hover {
   background-color: #d3d3d338;

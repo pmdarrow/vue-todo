@@ -1,6 +1,7 @@
 <template>
   <div v-if="todoList">
     <section class="title">
+      <router-link :to="{ name: 'todo-lists' }">← Back</router-link>
       <h2>{{ todoList.name }}</h2>
     </section>
     <TodoInput :todoListId="todoList.id" />
@@ -66,3 +67,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.title a {
+  position: absolute;
+  top: 25px;
+  left: 16px;
+  font-size: 16px;
+}
+</style>
