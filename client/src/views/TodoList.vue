@@ -1,8 +1,9 @@
 <template>
   <div v-if="todoList">
     <section class="title">
-      <router-link :to="{ name: 'todo-lists' }">← Back</router-link>
+      <router-link class="back" :to="{ name: 'todo-lists' }">← Back</router-link>
       <h2>{{ todoList.name }}</h2>
+      <button class="undo" @click="undo">Undo</button>
     </section>
     <TodoInput :todoListId="todoList.id" />
     <section class="main" v-show="allTodos.length">
@@ -29,6 +30,7 @@ import TodoItem from '@/components/TodoItem.vue';
 import TodoInput from '@/components/TodoInput.vue';
 import TodoFilter from '@/components/TodoFilter.vue';
 import store from '@/store';
+import { undoHistory } from '@/undo';
 
 export default {
   name: 'TodoList',
@@ -40,6 +42,7 @@ export default {
   async beforeRouteEnter(to, from, next) {
     const listIdParam = parseInt(to.params.id, 10);
     await store.dispatch('loadTodoList', { id: listIdParam });
+    undoHistory.init(store);
     next();
   },
   computed: {
@@ -65,14 +68,25 @@ export default {
       return this.$route.name.split('.')[1];
     },
   },
+  methods: {
+    undo() {
+      undoHistory.undo();
+    },
+  },
 };
 </script>
 
 <style scoped>
-.title a {
-  position: absolute;
-  top: 25px;
-  left: 16px;
-  font-size: 16px;
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.title h2 {
+  flex: 4;
+}
+.back, .undo {
+  flex: 1;
+  cursor: pointer;
 }
 </style>

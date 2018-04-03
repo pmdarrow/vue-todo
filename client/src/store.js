@@ -2,11 +2,13 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import api from './api';
+import { undoPlugin } from './undo';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   strict: true,
+  plugins: [undoPlugin],
   state: {
     todoLists: {},
     todos: {},
@@ -35,6 +37,10 @@ export default new Vuex.Store({
     setTodo(state, { todo }) {
       Vue.set(state.todos, todo.id, todo);
     },
+    updateTodo(state, { id, title, completed }) {
+      if (title !== undefined) state.todos[id].title = title;
+      if (completed !== undefined) state.todos[id].completed = completed;
+    },
     appendTodo(state, { todoListId, todo }) {
       Vue.set(state.todos, todo.id, todo);
       state.todoLists[todoListId].todos.push(todo.id);
@@ -42,6 +48,12 @@ export default new Vuex.Store({
     deleteTodo(state, { todoListId, id }) {
       state.todoLists[todoListId].todos =
         state.todoLists[todoListId].todos.filter(todoId => todoId !== id);
+    },
+    emptyState() {
+      this.replaceState({
+        todoLists: {},
+        todos: {},
+      });
     },
   },
   actions: {
@@ -68,8 +80,11 @@ export default new Vuex.Store({
       commit('appendTodo', { todoListId, todo });
     },
     async updateTodo({ commit }, { id, title, completed }) {
-      const updatedTodo = await api.updateTodo(id, title, completed);
-      commit('setTodo', { todo: updatedTodo });
+      // Note: I'd prefer to take the full API response and commit it to the store here, but
+      // this makes client-side undo behaviour unpredictable. Sending undo changes to the server
+      // would fix this.
+      await api.updateTodo(id, title, completed);
+      commit('updateTodo', { id, title, completed });
     },
     async deleteTodo({ commit }, { todoListId, id }) {
       await api.deleteTodo(id);
