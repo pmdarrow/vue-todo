@@ -1,5 +1,7 @@
 # vue-todo
 
+Simple todo app demonstrating Vue.js/Vuex working with a REST API.
+
 ## Server
 
 Built with:
