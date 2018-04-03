@@ -28,4 +28,7 @@ a {
 .info {
   font-size: 14px;
 }
+.v-select .dropdown-menu {
+  overflow-y: visible;
+}
 </style>

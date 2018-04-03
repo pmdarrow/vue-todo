@@ -1,7 +1,11 @@
 <template>
   <div>
     <section class="title">
-      <h2>Choose or create a todo list...</h2>
+      <h2>Find a todo list...</h2>
+    </section>
+    <Autocomplete />
+    <section class="title secondary">
+      <h2>Or create a new one.</h2>
     </section>
     <TodoListInput />
     <section class="main">
@@ -19,12 +23,13 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import Autocomplete from '@/components/Autocomplete.vue';
 import TodoListInput from '@/components/TodoListInput.vue';
 import store from '@/store';
 
 export default {
   name: 'TodoLists',
-  components: { TodoListInput },
+  components: { Autocomplete, TodoListInput },
   async beforeRouteEnter(to, from, next) {
     await store.dispatch('loadTodoLists');
     next();
@@ -37,11 +42,14 @@ export default {
 </script>
 
 <style scoped>
+.secondary {
+  background: linear-gradient(white, #f5f5f5);
+}
 a {
   display: block;
 }
 a:hover {
-  background-color: #d3d3d338;
+  background-color: #f5f5f5c4;
 }
 li label {
   cursor: pointer;
