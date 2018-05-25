@@ -11,6 +11,8 @@ flask-marshmallow = "*"
 flask-cors = "*"
 sqlalchemy = "*"
 mysqlclient = "*"
+celery = "*"
+redis = "*"
 
 [dev-packages]
 "flake8" = "*"
